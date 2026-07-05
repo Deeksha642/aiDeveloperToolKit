@@ -14,15 +14,6 @@ export class AIController {
 
             const { language, code } = req.body;
 
-            if (!language || !code) {
-
-                return res.status(400).json({
-                    success: false,
-                    message: "language and code are required"
-                });
-
-            }
-
             const prompt = buildReviewPrompt(language, code);
 
             const review = await aiService.reviewCode(prompt);
