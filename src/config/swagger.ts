@@ -6,4 +6,6 @@ const swaggerDocument = YAML.load(
   path.join(__dirname, "../docs/swagger.yaml")
 );
 
+console.log(swaggerDocument.paths);
+
 export { swaggerUi, swaggerDocument };

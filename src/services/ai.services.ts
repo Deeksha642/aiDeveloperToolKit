@@ -1,19 +1,45 @@
-import ai from "../config/gemini";
-import { CodeReviewResponse } from "../types/review";
+import client from "../config/groq";
 import { cleanJson } from "../utils/json";
 
 class AIService {
 
-    async reviewCode(prompt: string): Promise<CodeReviewResponse> {
+    async generate<T>(prompt: string): Promise<T> {
 
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
+        const response = await client.chat.completions.create({
+
+            model: process.env.AI_MODEL!,
+
+            messages: [
+                {
+                    role: "user",
+                    content: prompt
+                }
+            ],
+
+            temperature: 0.2
+
         });
 
-       const text = cleanJson(response.text ?? "");
+        const text = response.choices[0]?.message?.content;
 
-        return JSON.parse(text);
+        if (!text) {
+            throw new Error("No response received from AI.");
+        }
+
+        const cleaned = cleanJson(text);
+
+        try {
+
+            return JSON.parse(cleaned) as T;
+
+        } catch (error) {
+
+            console.error("AI Response:");
+            console.error(cleaned);
+
+            throw new Error("Invalid JSON returned by AI.");
+
+        }
 
     }
 

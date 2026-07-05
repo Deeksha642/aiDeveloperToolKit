@@ -24,3 +24,9 @@ Part 7
 
 Part 8
 ✔ Docker
+
+POST /api/v1/ai/review-code
+{
+  "language": "typescript",
+  "code": "const sum=(a,b)=>a+b"
+}

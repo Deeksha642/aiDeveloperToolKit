@@ -33,3 +33,59 @@ paths:
       responses:
         '200':
           description: AI Review
+      
+  /ai/generate-sql:
+    post:
+      summary: Generate SQL query using AI
+      description: Generate SQL query from natural language.
+
+      tags:
+        - AI
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - database
+                - query
+              properties:
+                database:
+                  type: string
+                  example: postgresql
+
+                query:
+                  type: string
+                  example: Show top 5 customers by revenue
+
+      responses:
+        "200":
+          description: SQL generated successfully
+
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+
+                  data:
+                    type: object
+                    properties:
+                      sql:
+                        type: string
+                        example: SELECT customer_name, SUM(total_amount) AS revenue FROM orders GROUP BY customer_name ORDER BY revenue DESC LIMIT 5;
+
+                      explanation:
+                        type: string
+                        example: Retrieves the top five customers ordered by total revenue.
+
+        "400":
+          description: Invalid Request
+
+        "500":
+          description: Internal Server Error
