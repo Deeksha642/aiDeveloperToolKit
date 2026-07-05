@@ -9,11 +9,27 @@ servers:
   - url: http://localhost:3000/api/v1
 
 paths:
-
   /health:
     get:
       summary: Health Check
-
       responses:
         '200':
           description: Success
+
+  /ai/review-code:
+    post:
+      summary: Review source code using AI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                language:
+                  type: string
+                code:
+                  type: string
+      responses:
+        '200':
+          description: AI Review
