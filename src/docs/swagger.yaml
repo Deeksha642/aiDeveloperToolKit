@@ -1,0 +1,19 @@
+openapi: 3.0.3
+
+info:
+  title: AI Developer Toolkit API
+  version: 1.0.0
+  description: AI powered backend developer toolkit
+
+servers:
+  - url: http://localhost:3000/api/v1
+
+paths:
+
+  /health:
+    get:
+      summary: Health Check
+
+      responses:
+        '200':
+          description: Success
