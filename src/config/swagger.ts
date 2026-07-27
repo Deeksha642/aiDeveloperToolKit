@@ -1,11 +1,16 @@
+import fs from "fs";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
 
-const swaggerDocument = YAML.load(
-  path.join(__dirname, "../docs/swagger.yaml")
-);
+const candidates = [
+  path.resolve(process.cwd(), "src", "docs", "swagger.yaml"),
+  path.resolve(process.cwd(), "docs", "swagger.yaml"),
+];
 
-console.log(swaggerDocument.paths);
+const swaggerPath =
+  candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0];
+
+const swaggerDocument = YAML.load(swaggerPath);
 
 export { swaggerUi, swaggerDocument };

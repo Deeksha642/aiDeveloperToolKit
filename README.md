@@ -1,32 +1,92 @@
-# aiDeveloperToolKit
-Ai developer toolkit having feature like code review, sql generator, error explainer
+# AI Developer Toolkit
 
-Part 1
-✔ Project Setup
+AI-powered backend developer toolkit built with Node.js, TypeScript, Express, Swagger, and Groq LLM.
 
-Part 2
-✔ Express Server
+---
 
-Part 3
-✔ Gemini Integration
+## Features
 
-Part 4
-✔ Code Review API
+- AI Code Review
+- SQL Generator
+- Error Explainer
+- Swagger API Documentation
+- Zod Validation
+- Docker Support
 
-Part 5
-✔ SQL Generator
+---
 
-Part 6
-✔ Error Explainer
+## Tech Stack
 
-Part 7
-✔ Documentation
+- Node.js
+- TypeScript
+- Express
+- Groq API
+- Swagger
+- Zod
+- Docker
 
-Part 8
-✔ Docker
+---
+
+## Installation
+
+```bash
+git clone <repo>
+
+cd ai-developer-toolkit
+
+npm install
+```
+
+Create a `.env` file.
+
+```env
+PORT=3000
+GROQ_API_KEY=YOUR_KEY
+AI_MODEL=llama-3.3-70b-versatile
+```
+
+Run
+
+```bash
+npm run dev
+```
+
+---
+
+## Swagger
+
+```
+http://localhost:3000/api-docs
+```
+
+---
+
+## APIs
 
 POST /api/v1/ai/review-code
-{
-  "language": "typescript",
-  "code": "const sum=(a,b)=>a+b"
-}
+
+POST /api/v1/ai/generate-sql
+
+POST /api/v1/ai/explain-error
+
+---
+
+## Folder Structure
+
+```
+src
+ ├── config
+ ├── controller
+ ├── middlewares
+ ├── prompts
+ ├── routes
+ ├── schemas
+ ├── services
+ ├── types
+ └── utils
+```
+
+docker build --no-cache -t ai-toolkit .
+docker run -p 3000:3000 --env-file .env ai-toolkit
+docker ps
+docker stop <container_id>
