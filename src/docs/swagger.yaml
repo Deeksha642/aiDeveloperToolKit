@@ -13,7 +13,7 @@ paths:
     get:
       summary: Health Check
       responses:
-        '200':
+        "200":
           description: Success
 
   /ai/review-code:
@@ -31,17 +31,15 @@ paths:
                 code:
                   type: string
       responses:
-        '200':
+        "200":
           description: AI Review
-      
+
   /ai/generate-sql:
     post:
       summary: Generate SQL query using AI
       description: Generate SQL query from natural language.
-
       tags:
         - AI
-
       requestBody:
         required: true
         content:
@@ -55,15 +53,12 @@ paths:
                 database:
                   type: string
                   example: postgresql
-
                 query:
                   type: string
                   example: Show top 5 customers by revenue
-
       responses:
         "200":
           description: SQL generated successfully
-
           content:
             application/json:
               schema:
@@ -72,20 +67,76 @@ paths:
                   success:
                     type: boolean
                     example: true
-
                   data:
                     type: object
                     properties:
                       sql:
                         type: string
                         example: SELECT customer_name, SUM(total_amount) AS revenue FROM orders GROUP BY customer_name ORDER BY revenue DESC LIMIT 5;
-
                       explanation:
                         type: string
                         example: Retrieves the top five customers ordered by total revenue.
-
         "400":
           description: Invalid Request
+        "500":
+          description: Internal Server Error
 
+  /ai/explain-error:
+    post:
+      summary: Explain programming errors using AI
+      tags:
+        - AI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - language
+                - error
+              properties:
+                language:
+                  type: string
+                  example: nodejs
+                error:
+                  type: string
+                  example: TypeError: Cannot read properties of undefined (reading 'map')
+      responses:
+        "200":
+          description: Error explanation generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      summary:
+                        type: string
+                        example: The application attempted to call map() on an undefined value.
+                      possibleCauses:
+                        type: array
+                        items:
+                          type: string
+                      solution:
+                        type: array
+                        items:
+                          type: string
+                      example:
+                        type: object
+                        properties:
+                          before:
+                            type: string
+                            example: users.map(user => user.name)
+                          after:
+                            type: string
+                            example: (users ?? []).map(user => user.name)
+        "400":
+          description: Validation Error
         "500":
           description: Internal Server Error
